@@ -24,16 +24,20 @@ const filePath = path.resolve("db", "contacts.json");
     await fs.writeFile(filePath, JSON.stringify(contacts, null, 2));
     return result;
   };
- const addContact= async(name, email, phone)=> {
+  const addContact = async (data) => {
     const contacts = await listContacts();
     const newContacts = {
-        id: nanoid(),
-        name,
-        email,
-        phone,
-    }
+      id: nanoid(),
+      ...data,
+    };
     contacts.push(newContacts);
     await fs.writeFile(filePath, JSON.stringify(contacts, null, 2));
     return newContacts || null;
-}
-module.exports = { listContacts, getContactById, addContact, removeContact };
+  };
+ 
+export default {
+	listContacts,
+	getContactById,
+	removeContact,
+	addContact,
+};
